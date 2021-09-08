@@ -12,7 +12,8 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        let profileView = (Bundle.main.loadNibNamed("ProfileView", owner: self, options: nil)![0])
+        self.view.addSubview(profileView as! ProfileView)
     }
     
 
