@@ -24,17 +24,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         
         let profileVC = ProfileViewController()
-        let profileButton = UINavigationController(rootViewController: profileVC)
+        let profileView = UINavigationController(rootViewController: profileVC)
         let profileIcon = UIImage(named: "Profile")
-        profileButton.tabBarItem = UITabBarItem(title: "profile", image: profileIcon, tag: 0)
+        profileView.tabBarItem = UITabBarItem(title: "profile", image: profileIcon, tag: 0)
         
         let feedVC = FeedViewController()
-        let feedButton = UINavigationController(rootViewController: feedVC)
+        let feedView = UINavigationController(rootViewController: feedVC)
         let feedIcon = UIImage(named: "lenta")
-        feedButton.tabBarItem = UITabBarItem(title: "feed", image: feedIcon, tag: 1)
+        feedView.tabBarItem = UITabBarItem(title: "feed", image: feedIcon, tag: 1)
         
         
-        tabBarController.viewControllers = [profileButton, feedButton]
+        tabBarController.viewControllers = [feedView, profileView]
         
         window?.rootViewController = tabBarController
     }
