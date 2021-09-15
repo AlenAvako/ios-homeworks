@@ -16,6 +16,7 @@
 		83CE58C126EBC08A00B419A3 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CE58C026EBC08A00B419A3 /* PostViewController.swift */; };
 		83CE58C326ECEFCB00B419A3 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CE58C226ECEFCB00B419A3 /* Post.swift */; };
 		83CE58C526ED02E000B419A3 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CE58C426ED02E000B419A3 /* InfoViewController.swift */; };
+		83CE58C826EFFB9E00B419A3 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83CE58C726EFFB9E00B419A3 /* ProfileHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		83CE58C026EBC08A00B419A3 /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		83CE58C226ECEFCB00B419A3 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		83CE58C426ED02E000B419A3 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		83CE58C726EFFB9E00B419A3 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,11 +64,11 @@
 		835BB28926E661FC00220593 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				83CE58C626EFFB7D00B419A3 /* Profile */,
 				835BB28A26E661FC00220593 /* AppDelegate.swift */,
 				835BB28C26E661FC00220593 /* SceneDelegate.swift */,
 				83CE58C426ED02E000B419A3 /* InfoViewController.swift */,
 				83CE58C026EBC08A00B419A3 /* PostViewController.swift */,
-				83CE58BE26EBBF3500B419A3 /* ProfileViewController.swift */,
 				83CE58BC26EBBE6C00B419A3 /* FeedViewController.swift */,
 				83CE58C226ECEFCB00B419A3 /* Post.swift */,
 				835BB29326E661FF00220593 /* Assets.xcassets */,
@@ -74,6 +76,15 @@
 				835BB29826E661FF00220593 /* Info.plist */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		83CE58C626EFFB7D00B419A3 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				83CE58BE26EBBF3500B419A3 /* ProfileViewController.swift */,
+				83CE58C726EFFB9E00B419A3 /* ProfileHeaderView.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -152,6 +163,7 @@
 				83CE58C326ECEFCB00B419A3 /* Post.swift in Sources */,
 				83CE58C526ED02E000B419A3 /* InfoViewController.swift in Sources */,
 				83CE58BD26EBBE6C00B419A3 /* FeedViewController.swift in Sources */,
+				83CE58C826EFFB9E00B419A3 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
