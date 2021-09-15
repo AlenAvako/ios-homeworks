@@ -100,6 +100,7 @@ class ProfileViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        getStatus()
         return true
     }
     
