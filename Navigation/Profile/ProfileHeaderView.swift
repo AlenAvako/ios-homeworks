@@ -9,10 +9,6 @@ import UIKit
 
 class ProfileHeaderView: UIView {
     
-    
-    
-    
-
     let profileImage: UIImageView = {
        let profileImage = UIImageView()
 
