@@ -47,8 +47,8 @@ class FeedViewController: UIViewController {
         buttonToPostView.layer.cornerRadius = 4
         
         newButtonToPostView.backgroundColor = UIColor(named: "appBlue")
-        newButtonToPostView.setTitle("Новости", for: .normal)
-        newButtonToPostView.addTarget(self, action: #selector(tap), for: .touchUpInside)
+        newButtonToPostView.setTitle("Что нового", for: .normal)
+        newButtonToPostView.addTarget(self, action: #selector(tapNewToPostView), for: .touchUpInside)
         newButtonToPostView.layer.shadowOffset = CGSize(width: 4, height: 4)
         newButtonToPostView.layer.shadowRadius = 4
         newButtonToPostView.layer.shadowColor = UIColor.black.cgColor
@@ -93,10 +93,15 @@ class FeedViewController: UIViewController {
 //    MARK: objc func
     @objc func tap() {
         let postVC = PostViewController()
-        postVC.postTitle = post.title
+        postVC.postTitle = buttonToPostView.title(for: .normal)
         navigationController?.pushViewController(postVC, animated: true)
     }
     
+    @objc func tapNewToPostView() {
+        let postVC = PostViewController()
+        postVC.postTitle = newButtonToPostView.title(for: .normal)
+        navigationController?.pushViewController(postVC, animated: true)
+    }
 }
 
 class PostViewBotton: UIButton {
