@@ -9,14 +9,22 @@ import UIKit
 
 class ProfileHeaderView: UIView, UITextFieldDelegate {
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     private var statusText: String = ""
     
-    override func layoutSubviews() {
-        
-    }
     //        MARK: Profile image
     lazy var profileImage: UIImageView = {
         let profileImage = UIImageView()
+        profileImage.translatesAutoresizingMaskIntoConstraints = false
         profileImage.image = UIImage(named: "Ava")
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.borderColor = UIColor.white.cgColor
@@ -28,6 +36,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     //        MARK: Status button
     lazy var getStatusButton: UIButton = {
         let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self,
                          action: #selector(getStatus(sender:)),
                          for: .touchUpInside)
@@ -45,15 +54,18 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     //        MARK: Status Label
     lazy var nameLabel: UILabel = {
         let name = UILabel()
+        name.translatesAutoresizingMaskIntoConstraints = false
         name.text = "Clint Barton"
         name.font = UIFont.systemFont(ofSize: 18,
                                       weight: .bold)
         name.textColor = .black
         return name
     }()
+    
     //        MARK: Add status text field
     lazy var statusLabel: UILabel = {
         let statusLabel = UILabel()
+        statusLabel.translatesAutoresizingMaskIntoConstraints = false
         statusLabel.text = "Waiting for something"
         statusLabel.font = UIFont.systemFont(ofSize: 14,
                                              weight: .regular)
@@ -63,6 +75,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     //        MARK: Add status text field
     lazy var addStatus: UITextField = {
         let addStatus = UITextField()
+        addStatus.translatesAutoresizingMaskIntoConstraints = false
         addStatus.addTarget(self,
                             action: #selector(statusTextChanged(_:)),
                             for: .editingChanged)
@@ -76,52 +89,44 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         return addStatus
     }()
     
-    private func setUpConstraints() {
+    
+    func addView() {
+        addStatus.delegate = self
+        addSubviews(profileImage, getStatusButton, nameLabel, statusLabel, addStatus)
         
-        guard let superView = superview else { return }
         
-        profileImage.translatesAutoresizingMaskIntoConstraints = false
-        getStatusButton.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        addStatus.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
-            profileImage.topAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.topAnchor, constant: leadingIndent),
-            profileImage.leftAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.leftAnchor, constant: leadingIndent),
+            profileImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: leadingIndent),
+            profileImage.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: leadingIndent),
             profileImage.widthAnchor.constraint(equalToConstant: 120),
             profileImage.heightAnchor.constraint(equalTo: profileImage.widthAnchor),
             
             getStatusButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: leadingIndent),
-            getStatusButton.leftAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.leftAnchor, constant: leadingIndent),
-            getStatusButton.trailingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
+            getStatusButton.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: leadingIndent),
+            getStatusButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
             getStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            getStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
             
-            nameLabel.topAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.topAnchor, constant: 27),
+            nameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
             nameLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: leadingIndent),
-            nameLabel.trailingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
+            nameLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
             nameLabel.heightAnchor.constraint(equalToConstant: 18),
             
             statusLabel.bottomAnchor.constraint(equalTo: getStatusButton.topAnchor , constant: -60),
             statusLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: leadingIndent),
-            statusLabel.trailingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
+            statusLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
             statusLabel.heightAnchor.constraint(equalToConstant: 14),
             
             addStatus.bottomAnchor.constraint(equalTo: getStatusButton.topAnchor , constant: -10),
             addStatus.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: leadingIndent),
-            addStatus.trailingAnchor.constraint(equalTo: superView.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
+            addStatus.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
             addStatus.heightAnchor.constraint(equalToConstant: 40),
         ])
         
         setNeedsLayout()
         layoutIfNeeded()
     }
-    
-    func addView() {
-        addStatus.delegate = self
-        addSubviews(profileImage, getStatusButton, nameLabel, statusLabel, addStatus)
-        self.setUpConstraints()
-    }
+
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
