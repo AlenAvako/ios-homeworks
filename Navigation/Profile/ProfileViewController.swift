@@ -9,11 +9,7 @@
 import UIKit
 
 class ProfileViewController: UIViewController {
-    
-    let tableView = UITableView(frame: .zero, style: .grouped)
-    let cellId = String(describing: PostTableViewCell.self)
-    
-    let button = UIButton()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,50 +20,95 @@ class ProfileViewController: UIViewController {
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    private lazy var postTableView: UITableView = {
+        let postTableView = UITableView(frame: .zero, style: .grouped)
+        postTableView.toAutoLayout()
+        postTableView.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.id)
+        postTableView.register(ProfileHeaderView.self, forHeaderFooterViewReuseIdentifier: ProfileHeaderView.id)
+        postTableView.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.id)
+        postTableView.separatorInset = .zero
+        return postTableView
+    }()
+    
     func setupTableView() {
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(postTableView)
+        postTableView.contentInsetAdjustmentBehavior = .scrollableAxes
+        postTableView.translatesAutoresizingMaskIntoConstraints = false
         
-        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: cellId)
-        
-        tableView.dataSource = self
-        tableView.delegate = self
+        postTableView.dataSource = self
+        postTableView.delegate = self
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            postTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            postTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            postTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            postTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
 
 extension ProfileViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Storage.tableModel.count
+        if section == 1 {
+            return arrayOfPosts.count
+        } else {
+            return 1
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! PostTableViewCell
-        cell.post = Storage.tableModel[indexPath.row]
-        return cell
+        
+        if indexPath.section == 1 {
+            
+            let cell = postTableView.dequeueReusableCell(withIdentifier: PostTableViewCell.id, for: indexPath) as! PostTableViewCell
+            cell.configureCell(title: arrayOfPosts[indexPath.row].author,
+                               image: arrayOfPosts[indexPath.row].image,
+                               description: arrayOfPosts[indexPath.row].description,
+                               likes: arrayOfPosts[indexPath.row].likes,
+                               views: arrayOfPosts[indexPath.row].views)
+            return cell
+        } else {
+            let cell = postTableView.dequeueReusableCell(withIdentifier: PhotosTableViewCell.id, for: indexPath) as! PhotosTableViewCell
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            let photoVC = PhotosViewController()
+            navigationController?.pushViewController(photoVC, animated: true)
+        }
     }
 }
 
 extension ProfileViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
         if section == 0 {
-            let headerView = ProfileHeaderView(frame: .zero)
+            let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ProfileHeaderView.id) as! ProfileHeaderView
             return headerView
         }
         return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 230
+        if section == 0 {
+            return 220
+        } else  {
+            return 0
+        }
     }
+    
+
 }

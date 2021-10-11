@@ -9,14 +9,14 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
     
-    var post: NewPost? {
-        didSet {
-            nameLabel.text = post?.author
-            postImage.image = UIImage(named: post?.image ?? "notFound")
-            descriptionLabel.text = post?.description
-            numberOfLikes.text = "Likes: \(String(post!.likes))"
-            numberOfViews.text = "Views: \(String(post!.views))"
-        }
+    static let id =  "PostTableViewCell"
+    
+    public func configureCell(title: String, image: String, description: String, likes: Int, views: Int) {
+        self.nameLabel.text = title
+        self.postImage.image = UIImage(named: image)
+        self.descriptionLabel.text = description
+        self.numberOfLikes.text = "Likes: \(likes)"
+        self.numberOfViews.text = "Views: \(views)"
     }
     
     lazy var nameLabel: UILabel = {

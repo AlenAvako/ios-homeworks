@@ -7,11 +7,10 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView, UITextFieldDelegate {
+class ProfileHeaderView: UITableViewHeaderFooterView, UITextFieldDelegate {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         addView()
     }
     
@@ -21,6 +20,8 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     private var statusText: String = ""
     
+    static let id = "ProfileHeaderView"
+    
     //        MARK: Profile image
     lazy var profileImage: UIImageView = {
         let profileImage = UIImageView()
@@ -29,7 +30,7 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
         profileImage.contentMode = .scaleAspectFill
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.layer.borderWidth = 3
-        profileImage.layer.cornerRadius = 60
+        profileImage.layer.cornerRadius = 50
         profileImage.clipsToBounds = true
         return profileImage
     }()
@@ -92,34 +93,31 @@ class ProfileHeaderView: UIView, UITextFieldDelegate {
     
     func addView() {
         addStatus.delegate = self
-        addSubviews(profileImage, getStatusButton, nameLabel, statusLabel, addStatus)
+        contentView.addSubviews(profileImage, getStatusButton, nameLabel, statusLabel, addStatus)
         
         
         NSLayoutConstraint.activate([
-            profileImage.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: leadingIndent),
-            profileImage.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: leadingIndent),
-            profileImage.widthAnchor.constraint(equalToConstant: 120),
+            
+            profileImage.widthAnchor.constraint(equalToConstant: 100),
             profileImage.heightAnchor.constraint(equalTo: profileImage.widthAnchor),
+            profileImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingIndent),
+            profileImage.topAnchor.constraint(equalTo: self.topAnchor, constant: leadingIndent),
             
-            getStatusButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: leadingIndent),
-            getStatusButton.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: leadingIndent),
-            getStatusButton.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
+            nameLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+            
+            getStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingIndent),
+            getStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: trailingIndent),
+            getStatusButton.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 42),
             getStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            getStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
             
-            nameLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 27),
-            nameLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: leadingIndent),
-            nameLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
-            nameLabel.heightAnchor.constraint(equalToConstant: 18),
+            statusLabel.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
+            statusLabel.bottomAnchor.constraint(equalTo: addStatus.topAnchor, constant: -6),
+            statusLabel.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: trailingIndent),
             
-            statusLabel.bottomAnchor.constraint(equalTo: getStatusButton.topAnchor , constant: -60),
-            statusLabel.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: leadingIndent),
-            statusLabel.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
-            statusLabel.heightAnchor.constraint(equalToConstant: 14),
-            
-            addStatus.bottomAnchor.constraint(equalTo: getStatusButton.topAnchor , constant: -10),
-            addStatus.leadingAnchor.constraint(equalTo: profileImage.safeAreaLayoutGuide.trailingAnchor, constant: leadingIndent),
-            addStatus.trailingAnchor.constraint(equalTo: self.safeAreaLayoutGuide.trailingAnchor, constant: trailingIndent),
+            addStatus.leadingAnchor.constraint(equalTo: profileImage.trailingAnchor, constant: 20),
+            addStatus.bottomAnchor.constraint(equalTo: getStatusButton.topAnchor, constant: -10),
+            addStatus.trailingAnchor.constraint(greaterThanOrEqualTo: contentView.trailingAnchor, constant: trailingIndent),
             addStatus.heightAnchor.constraint(equalToConstant: 40),
         ])
         
