@@ -203,7 +203,7 @@ extension ProfileHeaderView {
         UIView.animate(withDuration: 0.5) {
             self.backgroudForAvatar.alpha = 0
             self.xMarkButton.alpha = 0
-            self.profileImage.frame = CGRect(origin: CGPoint(x: 16, y: 16), size: CGSize(width: 100, height: 100))
+            self.profileImage.center = CGPoint(x: 66, y: 66)
             self.profileImage.transform = CGAffineTransform(scaleX: 1, y: 1)
             self.profileImage.layer.borderWidth = 3
             self.profileImage.layer.cornerRadius = 50
